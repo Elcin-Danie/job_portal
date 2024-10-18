@@ -1,26 +1,29 @@
 const db = require('../config/config');
 
-// Create the users table if it does not exist
-const createUserTable = () => {
-  const query = `
-    CREATE TABLE IF NOT EXISTS users (
-      id INT AUTO_INCREMENT PRIMARY KEY,
-      name VARCHAR(100) NOT NULL,
-      email VARCHAR(100) UNIQUE NOT NULL,
-      password VARCHAR(255) NOT NULL,
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )
-  `;
-  
-  db.query(query, (err) => {
-    if (err) throw err;
-    console.log('Users table created or already exists.');
-  });
-};
+class UserModel {
+    async register(first_name, last_name, email, hashedPassword) {
+        const query = 'INSERT INTO users (first_name,last_name, email, password) VALUES (?, ?, ?, ?)';
+        return new Promise((resolve, reject) => {
+            db.query(query, [first_name, last_name, email, hashedPassword], (err, result) => {
+                if (err) {
+                    return reject(err); // Handle error appropriately
+                }
+                resolve(result);
+            });
+        });
+    }
 
-// Call the function to create the table
-createUserTable();
+    async findByEmail(email) {
+        const query = 'SELECT * FROM users WHERE email = ?';
+        return new Promise((resolve, reject) => {
+            db.query(query, [email], (err, results) => {
+                if (err) {
+                    return reject(err); // Handle error appropriately
+                }
+                resolve(results);
+            });
+        });
+    }
+}
 
-module.exports = {
-  db,
-};
+module.exports = new UserModel(); // Export an instance of UserModel

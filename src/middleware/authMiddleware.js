@@ -7,8 +7,8 @@ const authenticateToken = (req, res, next) => {
   if (!token) return res.sendStatus(401); // Unauthorized
 
   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403); // Forbidden
-    req.user = user; // Attach user info to request
+    if (err) return res.sendStatus(403); 
+    req.user = user; 
     next();
   });
 };
