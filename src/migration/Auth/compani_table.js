@@ -3,7 +3,7 @@ const db = require('../../config/config');
 
 const createComapanitable = () => {
     const query = `
-    CREATE TABLE IF NOT EXISTS comapanis (
+    CREATE TABLE IF NOT EXISTS companies (
       id INT AUTO_INCREMENT PRIMARY KEY,
       first_name VARCHAR(100) NOT NULL,
       last_name VARCHAR(100) NOT NULL,

@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const UserModel = require('../models/userModel');
+const path = require("path");
+
+const UserModel = require(path.resolve(__dirname,'../models/userModel'));
 
 class user_AuthController {
 
@@ -35,7 +37,7 @@ class user_AuthController {
             if (results.length === 0) {
                 return res.status(400).json({ error: 'Invalid email or password.' });
             }
-
+            
             const user = results[0];
 
             // Compare the passwords

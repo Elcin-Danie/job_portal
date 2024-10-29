@@ -2,6 +2,7 @@ const db = require('../config/config');
 
 class UserModel {
     async register(first_name, last_name, email, hashedPassword) {
+        console.log(first_name, last_name, email, phone, hashedPassword);
         const query = 'INSERT INTO users (first_name,last_name, email, password) VALUES (?, ?, ?, ?)';
         return new Promise((resolve, reject) => {
             db.query(query, [first_name, last_name, email, hashedPassword], (err, result) => {
